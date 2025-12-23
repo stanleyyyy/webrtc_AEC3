@@ -372,8 +372,8 @@ void EchoRemoverImpl::ProcessCapture(
   // Optionally return the linear filter output.
   if (linear_output) {
     RTC_DCHECK_GE(1, linear_output->size());
-    RTC_DCHECK_EQ(num_capture_channels_, linear_output[0].size());
-    for (size_t ch = 0; ch < num_capture_channels_; ++ch) {
+    int channels = std::min(num_capture_channels_, linear_output[0].size());
+    for (size_t ch = 0; ch < channels; ++ch) {
       RTC_DCHECK_EQ(kBlockSize, (*linear_output)[0][ch].size());
       std::copy(e[ch].begin(), e[ch].end(), (*linear_output)[0][ch].begin());
     }
